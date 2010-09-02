@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta generator="adva-cms2" /><meta generator="adva-cms2" /><title>Globalize for Ruby on Rails</title><title>Globalize for Ruby on Rails</title><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script></head><body class="page"><div class="clearing" id="header"><h1>Globalize for Ruby on Rails</h1><p class="navigation" id="login_links"><a href="/users/sign_in?return_to=%2Fpages%2F80" id="login_link">Sign in</a><a href="/users/sign_up" id="signup_link">Sign up</a></p><p class="navigation" id="logout_links" style="display: none;">Logged in as &lt;span class=&quot;user_name&quot;&gt;&lt;/span&gt;<a href="/users/sign_out?return_to=%2Fpages%2F80" id="logout_link">Sign out</a></p><ul id="sections"><a href="/">Home</a><li><a href="/">Home</a></li><a href="/pages">Pages</a><li><a href="/pages">Pages</a></li><a href="/pages/acknowledgements">Acknowledgements</a><li><a href="/pages/acknowledgements">Acknowledgements</a></li><a href="/pages/community">Community</a><li><a href="/pages/community">Community</a></li><a href="/pages/documentation">Documentation</a><li><a href="/pages/documentation">Documentation</a></li><a href="/pages/example-application">Example Application</a><li><a href="/pages/example-application">Example Application</a></li><a href="/pages/features">Features</a><li><a href="/pages/features">Features</a></li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a><li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a></li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a><li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a></li><a href="/pages/how-globalize-works">How Globalize Works</a><li><a href="/pages/how-globalize-works">How Globalize Works</a></li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a><li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a></li><a href="/pages/troubleshooting">Troubleshooting</a><li><a href="/pages/troubleshooting">Troubleshooting</a></li><a href="/pages/unit-tested-example">Unit Tested Example</a><li><a href="/pages/unit-tested-example">Unit Tested Example</a></li></ul></div><div id="page"><div id="main"><h2>In your models</h2><pre><code>
+
+  class Product &lt; ActiveRecord::Base
+
+    translates :name, :description, :specs
+
+  end
+
+</code></pre><p>Create a row and its translation:</p><pre><code>
+
+  Locale.set_base_language('en-US')
+
+  Locale.set('en-US')
+
+  Product.create!(:name =&gt; 'Meatballs')
+
+  Locale.set('es-ES')
+
+  prod = Product.find(1)
+
+  prod.name = 'Albóndigas'
+
+  prod.save
+
+</code></pre><p>Then:</p><pre><code>
+
+  Locale.set("en-US")
+
+  prod = Product.find(1)
+
+  prod.name -&gt; "Meatballs"
+
+  Locale.set("es-ES")
+
+  prod = Product.find(1)
+
+  prod.name -&gt; "Albóndigas"
+
+</code></pre><h2>In your views (or anywhere else)</h2><pre><code>
+
+  Locale.set("he-IL")
+
+  &lt;%= "Thanks for ordering!".t %&gt; -&gt; "תודה על ההזמנה!"
+
+  &lt;%= "You've got %d items in your cart" / 5 %&gt; -&gt; "יש 5 מוצרים בסל שלך"
+
+  Locale.set("es-ES")
+
+  &lt;%= Time.now.localize("%d %B %Y") %&gt; -&gt; "17 Octubre 2005"
+
+  &lt;%= 12345.45.localize %&gt; -&gt; "12.345,45"
+
+</code></pre><p>There&#8217;s more, see <a href="/pages/features" class="existingWikiWord">Features</a>.</p>
+</div></div></body></html>

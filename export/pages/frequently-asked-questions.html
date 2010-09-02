@@ -1,0 +1,586 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta generator="adva-cms2" /><meta generator="adva-cms2" /><title>Globalize for Ruby on Rails</title><title>Globalize for Ruby on Rails</title><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script></head><body class="page"><div class="clearing" id="header"><h1>Globalize for Ruby on Rails</h1><p class="navigation" id="login_links"><a href="/users/sign_in?return_to=%2Fpages%2F78" id="login_link">Sign in</a><a href="/users/sign_up" id="signup_link">Sign up</a></p><p class="navigation" id="logout_links" style="display: none;">Logged in as &lt;span class=&quot;user_name&quot;&gt;&lt;/span&gt;<a href="/users/sign_out?return_to=%2Fpages%2F78" id="logout_link">Sign out</a></p><ul id="sections"><a href="/">Home</a><li><a href="/">Home</a></li><a href="/pages">Pages</a><li><a href="/pages">Pages</a></li><a href="/pages/acknowledgements">Acknowledgements</a><li><a href="/pages/acknowledgements">Acknowledgements</a></li><a href="/pages/community">Community</a><li><a href="/pages/community">Community</a></li><a href="/pages/documentation">Documentation</a><li><a href="/pages/documentation">Documentation</a></li><a href="/pages/example-application">Example Application</a><li><a href="/pages/example-application">Example Application</a></li><a href="/pages/features">Features</a><li><a href="/pages/features">Features</a></li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a><li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a></li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a><li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a></li><a href="/pages/how-globalize-works">How Globalize Works</a><li><a href="/pages/how-globalize-works">How Globalize Works</a></li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a><li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a></li><a href="/pages/troubleshooting">Troubleshooting</a><li><a href="/pages/troubleshooting">Troubleshooting</a></li><a href="/pages/unit-tested-example">Unit Tested Example</a><li><a href="/pages/unit-tested-example">Unit Tested Example</a></li></ul></div><div id="page"><div id="main"><p><strong>NOTE:</strong> The best way to get help now is on the <a href="/pages/community#mailingList" class="existingWikiWord">MailingList</a>.</p>
+
+<p><strong>Q</strong>: Do methods like <code>truncate</code> still work on translated/unicode strings?</p>
+
+<p><strong>A</strong>: Good question, I haven&#8217;t looked into this much, but it&#8217;s more of a Ruby thing. Ruby doesn&#8217;t seem to handle <code>String#length</code> correctly for unicode strings, although I believe there are libraries that correct this. Better Unicode support is also planned for future Ruby releases. &#8212;JH</p>
+
+<p>Meanwhile <code>Globalize</code> code doesn&#8217;t care that <code>String.length</code> returns size of string in bytes.<br />E.g. there is no support for multibyte <code>UTF8</code> chars in methods <code>globalize/rails/active_record.rb</code>:<br /><code>ActiveRecord::Errors#add_on_boundary_breaking</code>,<br /><code>ActiveRecord::Validations#validates_length_of</code>,<br />or <code>globalize/models/language.rb</code></p>
+
+<p><code>Globalize::Language#after_initialize:</code><br /><pre>
+
+<code>
+
+   if !pluralization.nil? &#38;&#38; pluralization.size &gt; 200
+
+      raise SecurityError, "Pluralization field for #{self.english_name} language " + "contains potentially harmful code. " + "Must be less than 200 characters in length. Was #{pluralization.size} characters."
+
+   end
+
+</code><br /></pre></p>
+
+<p>Be honest, say <code>validates_bytes_length_of</code>, &#8220;must be less then 200 <strong>bytes</strong>&#8221; or address this issue.</p>
+
+<hr />
+
+<p><strong>Q</strong>: The installation looks too easy. In fact, I tried it out.</p>
+
+<p>I see this:<br /><pre>
+
+242:~/CD/railsdemos oracle$ rails globize
+
+...
+
+242:~/CD/railsdemos oracle$ cd globize
+
+242:~/CD/railsdemos/globize oracle$  script/plugin install svn://www.diluvia.net/rails-plugins/globalize/trunk
+
+/opt/local/lib/ruby/1.8/open-uri.rb:87:in `initialize': No such file or directory - svn://www.diluvia.net/rails-plugins/globalize/trunk (Errno::ENOENT)
+
+    from /opt/local/lib/ruby/1.8/open-uri.rb:87:in `open_uri_original_open'
+
+...
+
+    from     from script/plugin:3
+
+</pre></p>
+
+<p>What am I doing wrong?</p>
+
+<p>-Dan<br /><a href="mailto:Dan.Bikle@gmail.com">Dan.Bikle@gmail.com</a></p>
+
+<p><strong>A</strong>: Dan, do you have <code>subversion</code> installed? Is it in your path? Also, which version of Ruby are you running?</p>
+
+<hr />
+
+<p><strong>Q</strong>: I&#8217;ve also go a weird error, when using <code>PostGreSQL 8.0</code>. Everything works fine on my <code>debian</code> server (live box), but on my <code>Ubuntu</code> box (devel box) things are a little screwy.</p>
+
+<p>Everytime I try to <code>rake migrate</code> I get the following error:</p>
+
+<pre>
+
+ RuntimeError: ERROR     C55000  Mcurrval of sequence "globalize_countries_id_seq" is not yet defined in this session    Fsequence.c        L598    Rcurrval: SELECT currval('public.globalize_countries_id_seq')
+
+</pre>
+
+<p>Anyone have any idea what I&#8217;m doing wrong ?</p>
+
+<p><strong>A</strong>: Which versions of Rails, Globalize and Postgresql do you have?&#8212;JH</p>
+
+<hr />
+
+<p>I got the data to load by modifying the migration to ignore the row id. Here is a patch:<br /><pre>
+
+--- 002_globalize_migration.rb.orig     2005-12-30 17:38:33.000000000 +0800
+
++++ 002_globalize_migration.rb  2005-12-29 02:24:22.000000000 +0800
+
+@@ -72,13 +72,20 @@
+
+       reader = CSV::Reader.create(data)
+
+       columns = reader.shift.map {|column_name| cnx.quote_column_name(column_name) }
+
++      columns.shift # added for PostgreSQL
+
+       column_clause = columns.join(', ')
+
+       reader.each do |row|
+
+         next if row.first.nil? # skip blank lines
+
+         raise "No table name defined" if !table_name
+
+         raise "No header defined" if !column_clause
+
+-        values_clause = row.map {|v| cnx.quote(v).gsub('
+
+', "
+
+").gsub('
+
+', "
+
+") }.join(', ')
+
++
+
++       # Changed for PostgreSQL
+
++        #values_clause = row.map {|v| cnx.quote(v).gsub('
+
+', "
+
+").gsub('
+
+', "
+
+") }.join(', ')
+
++        values = row.map {|v| cnx.quote(v).gsub('
+
+', "
+
+").gsub('
+
+', "
+
+") }
+
++       values.shift
+
++        values_clause = values.join(', ')
+
++
+
+         sql = "INSERT INTO #{table_name} (#{column_clause}) VALUES (#{values_clause})"
+
+         cnx.insert(sql)
+
+       end
+
+</pre><br />&#8212;Jake Morrison</p>
+
+<hr /><br />I had the same trouble with Postgres. The issue is that Postgres does not define currval() before the sequence is used. What I did was add a call to set the values on the sequences after the creation of the tables (around line 55):
+
+<pre>
+
+    # Added for PostgresSQL
+
+    tables = ['globalize_countries', 'globalize_translations', 'globalize_languages']
+
+    tables.each do |table|
+
+      sql = "SELECT setval('#{table}_id_seq', 1)"
+
+      ActiveRecord::Base.connection.execute(sql)
+
+    end
+
+</pre>
+
+<p>-Daniel Wiesmann<br /><hr /></p>
+
+<p>Why is :select not allowed in the replacement for ActiveRecord::find? (in Globalize::DbTranslate)</p>
+
+<p><strong>Because Globalize modifies the <code>:select</code> portion of the query, so overriding it would break the functionality. &#8212;JH</strong></p>
+
+<hr />
+
+<p>I can see that I&#8217;m to use &#8220;string&#8221;.t to translate strings in my app, but where do I actually put the translated strings? Am I just blind, or is this not covered anywhere?</p>
+
+<p><strong>The translated strings go in the <code>globalize_translations</code> table in the db. Use <code>Globalize::Locale.set_translation(key, *translations)</code> to write new translations to the db. &#8212;JH</strong></p>
+
+<hr /><br />rails validation error gives me a &#8217;%d&#8217; i.s.o a number<br /><pre>
+
+There were problems with the following fields:
+
+    * Desc short is too short (min is %d characters)
+
+</pre>
+
+<p><span class="caps">BTW</span> is is an idea to have these validation errors also in the translation database?</p>
+
+<p>_cies breijs.</p>
+
+<p><strong>Answer:</strong> Actually, I&#8217;ve been seeing that, too&#8212;I&#8217;m going to look into it. &#8212;JH</p>
+
+<hr />
+
+<p>i think this is an error generating an other error.<br />when i get globalize out of the plugin-path and environment.rb i get to see a normal error.</p>
+
+<pre>
+
+ActionView::ActionViewError (No rhtml, rxml, or delegate template found for /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/templates/rescues/diagnostics.rhtml):
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_view/base.rb:281:in `pick_template_extension'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_view/base.rb:195:in `globalize_old_render_file'
+
+    /vendor/plugins/globalize/lib/globalize/rails/action_view.rb:15:in `render_file'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/rescue.rb:73:in `rescue_action_locally'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/rescue.rb:31:in `rescue_action'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/rescue.rb:108:in `perform_action'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/base.rb:369:in `send'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/base.rb:369:in `process_without_session_management_support'
+
+    /usr/local/lib/ruby/gems/1.8/gems/actionpack-1.11.2/lib/action_controller/session_management.rb:116:in `process'
+
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.0.0/lib/dispatcher.rb:38:in `dispatch'
+
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.0.0/lib/fcgi_handler.rb:141:in `process_request'
+
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.0.0/lib/fcgi_handler.rb:53:in `process!'
+
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.0.0/lib/fcgi_handler.rb:52:in `each_cgi'
+
+    /usr/local/lib/ruby/gems/1.8/gems/fcgi-0.8.6.1/./fcgi.rb:597:in `each'
+
+    /usr/local/lib/ruby/gems/1.8/gems/fcgi-0.8.6.1/./fcgi.rb:597:in `each_cgi'
+
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.0.0/lib/fcgi_handler.rb:52:in `process!'
+
+    /usr/local/lib/ruby/gems/1.8/gems/rails-1.0.0/lib/fcgi_handler.rb:22:in `process!'
+
+    dispatch.fcgi:24
+
+</pre>
+
+<p>_cies breijs.</p>
+
+<hr />
+
+<p><strong>Is there a way to make globalization work with pagination? I&#8217;m getting an error about :select, which was explained, but any ways to get it to work?</strong></p>
+
+<p><strong>Answer:</strong> Good question, I&#8217;m looking into it. &#8212;JH<br /><hr /></p>
+
+<p>Any plan to make this module install via rubygem?<br /><br />&#8212;CC</p>
+
+<p><strong>Answer:</strong> Not at this point. Since it&#8217;s a per application modification, I&#8217;m not sure how that would work. &#8212;JH<br /><hr /></p>
+
+<p>I have installed globalize according to the instruction provided in the home page. I populated the development database and test database. When I test run the test_plugins, I got an error loading sqlite3 as the following.</p>
+
+<pre>
+
+/usr/lib/ruby/site_ruby/1.8/rubygems/custom_require.rb:21:in `require__': no such file to load -- sqlite3 (MissingSourceFile)
+
+</pre>
+
+<p>Why do I have to have sqlite installed? I use mysql only. Any idea how to workaround this? <br /><br />&#8212;CC</p>
+
+<p><strong>Answer:</strong> You don&#8217;t really have to have sqlite installed. That&#8217;s just the default so that it will work out of the box with no extra db setup. Just change the globalize/test/config/database.yml file to reflect your mysql globalize test db. &#8212;JH</p>
+
+<hr /><br />Are translations by language or by locale? As far as I can see they are by language, i.e., <br /><pre>
+
+Locale.set("en-CA")
+
+Locale.set_translation("a test","Canadian test")
+
+Locale.set("en-US")
+
+Locale.set_translation("a test","American test")
+
+</pre> <br />ends up with only one translation, and <br /><pre>
+
+&lt;% Locale.set("en-CA") %&gt;
+
+&lt;%= "a test".t %&gt;&lt;br/&gt;
+
+&lt;% Locale.set("en-US") %&gt;
+
+&lt;%= "a test".t %&gt;&lt;br/&gt;
+
+</pre><br />prints out<br /><pre>
+
+American test
+
+American test
+
+</pre><br />Am I missing something? Thanks, <br><br />Dave<br />
+
+<p><strong>Answer:</strong> Yes, translations are keyed by language, however a language can be a localized dialect, such as en-CA (this is standardized as <span class="caps">RFC 3066</span>, and the Language model has a column for it). All you have to do is add rows to the globalize_languages table for the dialects you need. Then, when you do something like Locale.set(&#8216;en-CA&#8217;), the referenced language will be the new en-CA language you added. &#8212;JH</p>
+
+<p><strong>More:</strong> I have run into a problem with this. The translation <br />cacheing uses the language first, then the locale <br /><span class="caps">RFC 3066</span> locale. That is, cache_key in <br />Globalize::DbViewTranslator<br /><pre>
+
+  def cache_key(key, language, idx)
+
+    [ key, language.code, idx ].join(':')
+
+  end
+
+</pre><br />uses language.code, which is defined like this:<br /><pre>
+
+  def code; iso_639_1 || iso_639_3 || rfc_3066; end
+
+</pre><br />So it seems that either code needs to try rfc_3066 first, or cache_key does, i.e.<br /><pre>
+
+  def code; rfc_3066 || iso_639_1 || iso_639_3; end
+
+</pre><br />Or you have to null out the iso_639_1 and iso_639_3 fields<br />if you are going to use rfc_3066. I have modified <code>code</code> on my site. &#8212;Jake Morrison</p>
+
+<hr><br />I already have a small web app which is translated into a number of langs (about 7). It&#8217;s perl on top of mysql. I&#8217;m looking at maybe migrating to <span class="caps">ROR</span> in future.
+
+<p>My app is organised in a very simple way &#8211; I have a table called <code>sitetext</code>:</p>
+
+id
+
+en
+
+fr
+
+es
+
+de
+
+cn
+
+<p>this handles the majority of small words anotherd phrases used. I use substitution like $VAR to make things flexible. There are other tables too that work similarly.</p>
+
+<ol>
+
+<li>How is underlying content organised in globalize? How hard would it be to write a script to migrate my content?</li>
+
+<li>Also, suppose a pages content changes &#8211;8211 the author changes the english text. Does globalise track the fact that other langs are out of date? This is the way I will definitely need to go in future.</li>
+
+</ol>
+
+<p>thanks</p>
+
+<p><strong>Answer:</strong> I don&#8217;t understand how you&#8217;re currently doing it, but you should definitely be able to write a migration script. As for question <strong>2</strong>, Globalize is not currently tracking that, but it&#8217;s in the works.</p>
+
+<p><strong>response</strong><br />My current layout is just one col in a table per language, plus an id &#8211; that&#8217;s what I meant. How is the database laid out in your code? is it documented somewhere here (even just an sql script or something?) thanks for the answer.</p>
+
+<hr><br />Jan 05, 2006:
+
+<p>I&#8217;m using ubuntu &#8220;hoary&#8221;, ruby 1.83, rails 1.0, postgres 7.4.7, and globalize svn version 155.  The first two steps in the installation worked fine, but the third, &#8220;rake migrate&#8221; failed, in the same way described by Jake Morrison in his post above.  I also had success by changing my  db/migrate/001_globalize_migration.rb script as Jake described, after dropping the tables created in the database on the first attempt of running &#8220;rake migrate&#8221;</p>
+
+<p>It&#8217;d be nice to patch the file.  I suspect that the patched file would run on mysql also &#8211; the generated sql is standard sql.</p>
+
+<p>OK, off to testing out globalizing my app.</p>
+
+<p>Thanks for writing Globalize!</p>
+
+<hr>
+
+<p>2006-01-25:</p>
+
+<p>The plugin seems to be very useful. Only I&#8217;m worried that storing both app-translations (interface) and user-translations (user data) in the same database/table might make development as well as deployment harder. How do you handle this?</p>
+
+<p>I imagine there could be benefits of a <span class="caps">YAML</span> based (or similar) solution for the view translations, and maybe even the languages and countries tables. (Version control, separation of user data and app data and more.) (Note that this is ment as a question, not a flame.)</p>
+
+<p>2006-01-31</p>
+
+<p>I would like to feed all translation strings from external script in shell, but I have no idea how to make it&#8230; I can load those data only from controller and browser, but it is not efficient :(</p>
+
+<pre>
+
+class WelcomeController &lt; ApplicationController
+
+  include Globalize
+
+  def load
+
+      Locale.set_base_language('en')
+
+      rows = [
+
+        {:key=&gt;'title', :language=&gt;'pl', :translations=&gt;['Tytuł', 'Tytuły', 'Tytuły', 'Tytuły', 'Tytułów']},
+
+        {:key=&gt;'title', :language=&gt;'en', :translations=&gt;['The title', 'The titles']},
+
+        {:key=&gt;'title', :language=&gt;'de', :translations=&gt;['Der Titel']},
+
+      ]
+
+      for row in rows
+
+        Locale.set(row[:language])
+
+        Locale.set_translation(row[:key], Locale.language, row[:translations])
+
+      end
+
+  end
+
+end
+
+</pre>
+
+<p>There would be very usefull to have an option for extract all globalize strings into one place (like gettext). And, after translation, upgrade the database with one script.</p>
+
+<p>2006-02-07</p>
+
+<p>I have been trying <strong>using Globalize plugin from external Ruby script</strong>, but it I do not know how. I created folder &#8216;work&#8217; in my RoR application and I try to use script from this place:</p>
+
+<p>1st try:<br /><pre>
+
+require File.dirname(__FILE__) + '/../vendor/plugins/globalize/init.rb')
+
+</pre><br />does not work:<br /><pre>
+
+undefined local variable or method `directory' for main:Object (NameError)
+
+</pre></p>
+
+<p>2nd try:<br /><pre>
+
+require 'active_record'
+
+def directory_binding
+
+  directory = File.dirname(__FILE__)+"/../vendor/plugins/globalize/lib/"
+
+  Dir.chdir(directory)
+
+  binding
+
+end
+
+eval(IO.read(File.dirname(__FILE__) + '/../vendor/plugins/globalize/init.rb'), directory_binding)
+
+</pre><br />also does not work:<br /><pre>
+
+./globalize/rails/action_view.rb:4:in `alias_method': undefined method `render_file' for class `ActionView::Base'
+
+</pre></p>
+
+<hr><br />2006-02-21
+
+<p>I really need some help in using the Globalize plugin. I&#8217;m currently developing on <span class="caps">OSX 10</span>.4.4, RoR 1.0, Postgres 8.0, and Ruby 1.8.2_4. My problem is making Globalize work with my models. Here a sample of my code:</p>
+
+<p>environment.rb:<br /><pre>
+
+include Globalize
+
+</pre></p>
+
+<p>controllers/application.rb:<br /><pre>
+
+class ApplicationController &lt; ActionController::Base
+
+  Locale.set_base_language('en-US')
+
+end
+
+</pre></p>
+
+<p>models/trial.rb:<br /><pre>
+
+class Trial &lt; ActiveRecord::Base
+
+  translates :name
+
+end
+
+</pre></p>
+
+<p>trial_controller.rb:<br /><pre>
+
+class TrialController &lt; ApplicationController
+
+  def index
+
+    Locale.set('en-US')
+
+    Trial.create(:name =&gt; 'One')
+
+    Locale.set('es-ES')
+
+    trial = Trial.find(1)
+
+    trial.name = 'Uno'
+
+    if trial.save
+
+       render_text("#{trial.name")
+
+    end
+
+  end
+
+end
+
+</pre></p>
+
+<p>When running the app I get this error:<br /><pre>
+
+RuntimeError: ERROR    C42601    Msyntax error at or near "WHERE"    P20
+
+Fscan.l    L639    Ryyerror: UPDATE trials SET  WHERE id = 1
+
+</pre></p>
+
+<p>Looking at it closely, it seems that on the intiall save on the <br />database, no data is being saved on the globalize_translation table so <br />when I try to update the data from my trials table no value is being <br />passed.</p>
+
+<p>I know that I have configured the app properly because data is being <br />passed to the globalized_translation folder when I do &#8220;foo&#8221;.t on the views but I <br />really can&#8217;t make it work with my models.</p>
+
+<hr />
+
+<p><strong>Q</strong>: How do i prevent the base language text from being displayed when there&#8217;s no translation available for the current language?</p>
+
+<p><strong>Q</strong>: How do i find out (at runtime) if a model has a translation in the current language?</p>
+
+<p><strong>A</strong>: Globalize adds the methods <code>xxx_is_base?</code> to ActiveRecord, where <code>xxx</code> stands for the attribute name. before using the attribute, first check if it&#8217;s translated.</p>
+
+<p>Example:<br />I have lots of <code>Page</code> objects, the property <code>content</code> is translated into several languages. To display all the pages that still need to be translated, do the following:</p>
+
+<pre>
+
+# somewhere in the controller
+
+include Globalize
+
+Locale.set_base_language('en')
+
+Locale.set('es')
+
+@pages = Page.find(:all)
+
+# in the view
+
+&lt;%
+
+@pages.each do |page|
+
+  if page.content_is_base? %&gt;
+
+    &lt;%= puts 'Page still needs to be translated!' %&gt;
+
+&lt;% end %&gt;
+
+(not tested, hope there's no bug.)
+
+</pre>
+
+<p><strong>Q</strong>: When I do a rake migrate I get this error.  How do I fix it?</p>
+
+<pre>
+
+rake migrate
+
+(in /home/brian/pken)
+
+rake aborted!
+
+undefined method `namespace' for #&lt;Object:0x400b59c0&gt;
+
+</pre>
+
+<p><strong>A</strong>: You need to update rake to 0.7 which adds namespace support. `sudo gem update rake` will do that for you.</p>
+
+<hr /><br />2006-05-15
+
+<p><strong>Q</strong> How much effort would it be to implement Oracle support? What are the DB-depencies?</p>
+
+<p><strong>Q</strong> Is possible to implement a runtime <span class="caps">URL</span> name translation?<br />...<br />map.connect /:language/ <ins> &#8220;restaurant&#8221;.t </ins> &#8221;/&#8221; + &#8220;parmesan&#8221;.t<br />...<br />So that /en/restaurant/parmesan and /it/ristorante/parmigiano are logically the same page?</p>
+
+<p>&#8212;> that would be amazing!<br />or some other possibility to support localizing urls, too. how are you guys doing this?<br /><a href="http://rails.techno-weenie.net/question/2006/5/23/url_reverse_translation">http://rails.techno-weenie.net/question/2006/5/23/url_reverse_translation</a></p>
+</div></div></body></html>

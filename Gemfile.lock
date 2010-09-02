@@ -1,12 +1,4 @@
 PATH
-  remote: /home/chris/work/projects/adva-cms2/adva-assets
-  specs:
-    adva-assets (0.0.1)
-      adva-core
-      carrierwave-rails3
-      mini_magick
-
-PATH
   remote: /home/chris/work/projects/adva-cms2/adva-blog
   specs:
     adva-blog (0.0.1)
@@ -28,13 +20,6 @@ PATH
       adva-core
 
 PATH
-  remote: /home/chris/work/projects/adva-cms2/adva-cnet
-  specs:
-    adva-cnet (0.0.1)
-      adva-core
-      globalize3 (= 0.0.5)
-
-PATH
   remote: /home/chris/work/projects/adva-cms2/adva-contacts
   specs:
     adva-contacts (0.0.1)
@@ -48,10 +33,10 @@ PATH
       inherited_resources (= 1.1.2)
       minimal (= 0.0.14)
       nbrew-country_select
-      rails (= 3.0.0.rc2)
+      rails (= 3.0.0)
       routing-filter (= 0.1.6)
       simple_form
-      simple_nested_set (= 0.0.10)
+      simple_nested_set (= 0.0.11)
       simple_slugs (= 0.0.4)
       simple_table (= 0.0.5)
 
@@ -61,24 +46,26 @@ PATH
     adva-static (0.0.1)
       adva-core
       nokogiri
+      rack-cache
+      watchr
 
 PATH
   remote: /home/chris/work/projects/adva-cms2/adva-user
   specs:
     adva-user (0.0.1)
       adva-core
-      devise (= 1.1.1)
+      devise (= 1.1.2)
 
 GEM
   remote: http://rubygems.org/
   specs:
     abstract (1.0.0)
-    actionmailer (3.0.0.rc2)
-      actionpack (= 3.0.0.rc2)
+    actionmailer (3.0.0)
+      actionpack (= 3.0.0)
       mail (~> 2.2.5)
-    actionpack (3.0.0.rc2)
-      activemodel (= 3.0.0.rc2)
-      activesupport (= 3.0.0.rc2)
+    actionpack (3.0.0)
+      activemodel (= 3.0.0)
+      activesupport (= 3.0.0)
       builder (~> 2.1.2)
       erubis (~> 2.6.6)
       i18n (~> 0.4.1)
@@ -86,24 +73,23 @@ GEM
       rack-mount (~> 0.6.12)
       rack-test (~> 0.5.4)
       tzinfo (~> 0.3.23)
-    activemodel (3.0.0.rc2)
-      activesupport (= 3.0.0.rc2)
+    activemodel (3.0.0)
+      activesupport (= 3.0.0)
       builder (~> 2.1.2)
       i18n (~> 0.4.1)
-    activerecord (3.0.0.rc2)
-      activemodel (= 3.0.0.rc2)
-      activesupport (= 3.0.0.rc2)
-      arel (~> 1.0.0.rc1)
+    activerecord (3.0.0)
+      activemodel (= 3.0.0)
+      activesupport (= 3.0.0)
+      arel (~> 1.0.0)
       tzinfo (~> 0.3.23)
-    activeresource (3.0.0.rc2)
-      activemodel (= 3.0.0.rc2)
-      activesupport (= 3.0.0.rc2)
-    activesupport (3.0.0.rc2)
+    activeresource (3.0.0)
+      activemodel (= 3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
     arel (1.0.1)
       activesupport (~> 3.0.0)
     bcrypt-ruby (2.1.2)
     builder (2.1.2)
-    carrierwave-rails3 (0.4.5)
     columnize (0.3.1)
     cucumber (0.8.5)
       builder (~> 2.1.2)
@@ -114,7 +100,7 @@ GEM
     cucumber-rails (0.3.2)
       cucumber (>= 0.8.0)
     database_cleaner (0.5.2)
-    devise (1.1.1)
+    devise (1.1.2)
       bcrypt-ruby (~> 2.1.2)
       warden (~> 0.10.7)
     diff-lcs (1.1.2)
@@ -126,8 +112,6 @@ GEM
     gem_patching (0.0.2)
     gherkin (2.1.5)
       trollop (~> 1.16.2)
-    globalize3 (0.0.5)
-      activerecord (>= 3.0.0.rc)
     has_scope (0.5.0)
     i18n (0.4.1)
     inherited_resources (1.1.2)
@@ -140,8 +124,6 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
-    mini_magick (2.1)
-      subexec (~> 0.0.4)
     minimal (0.0.14)
       actionpack (>= 3.0.0.beta2)
     mocha (0.9.8)
@@ -150,22 +132,24 @@ GEM
     nokogiri (1.4.3.1)
     polyglot (0.3.1)
     rack (1.2.1)
+    rack-cache (0.5.2)
+      rack (>= 0.4)
     rack-mount (0.6.12)
       rack (>= 1.0.0)
     rack-test (0.5.4)
       rack (>= 1.0)
-    rails (3.0.0.rc2)
-      actionmailer (= 3.0.0.rc2)
-      actionpack (= 3.0.0.rc2)
-      activerecord (= 3.0.0.rc2)
-      activeresource (= 3.0.0.rc2)
-      activesupport (= 3.0.0.rc2)
-      bundler (>= 1.0.0.rc.6)
-      railties (= 3.0.0.rc2)
-    railties (3.0.0.rc2)
-      actionpack (= 3.0.0.rc2)
-      activesupport (= 3.0.0.rc2)
-      rake (>= 0.8.3)
+    rails (3.0.0)
+      actionmailer (= 3.0.0)
+      actionpack (= 3.0.0)
+      activerecord (= 3.0.0)
+      activeresource (= 3.0.0)
+      activesupport (= 3.0.0)
+      bundler (~> 1.0.0)
+      railties (= 3.0.0)
+    railties (3.0.0)
+      actionpack (= 3.0.0)
+      activesupport (= 3.0.0)
+      rake (>= 0.8.4)
       thor (~> 0.14.0)
     rake (0.8.7)
     responders (0.6.2)
@@ -177,7 +161,7 @@ GEM
     ruby-debug-base (0.10.3)
       linecache (>= 0.3)
     simple_form (1.2.2)
-    simple_nested_set (0.0.10)
+    simple_nested_set (0.0.11)
       activerecord (>= 3.0.0.beta4)
       activesupport
     simple_slugs (0.0.4)
@@ -185,7 +169,6 @@ GEM
       actionpack (~> 3.0.0.rc)
       activesupport (~> 3.0.0.rc)
     sqlite3-ruby (1.2.5)
-    subexec (0.0.4)
     term-ansicolor (1.0.5)
     test_declarative (0.0.3)
     thor (0.14.0)
@@ -198,7 +181,8 @@ GEM
     tzinfo (0.3.23)
     warden (0.10.7)
       rack (>= 1.0.0)
-    webrat (0.7.1)
+    watchr (0.7)
+    webrat (0.7.0)
       nokogiri (>= 1.2.0)
       rack (>= 1.0)
       rack-test (>= 0.5.3)
@@ -207,11 +191,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  adva-assets!
   adva-blog!
   adva-cart!
   adva-catalog!
-  adva-cnet!
   adva-contacts!
   adva-core!
   adva-static!
@@ -226,4 +208,4 @@ DEPENDENCIES
   test_declarative
   thor
   tidy_ffi
-  webrat (= 0.7.1)
+  webrat (= 0.7.0)

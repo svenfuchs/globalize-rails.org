@@ -1,0 +1,12 @@
+---
+  title: Acknowledgements
+  body: |
+    <p>This project grew out of many discussions I had with Josh Sierles. A lot of the view translation stuff is inspired by Per Wigren&#8217;s <span class="caps">MLR</span> code. I also used a lot of his localization data to populate the <code>globalize</code> tables. I have no idea how he compiled all that data, but it&#8217;s great stuff.</p>
+    
+    <p>A lot of people have helped iron out initial bugs (and I&#8217;m sure there will be many more opportunities to do the same), but I&#8217;d like to thank Andreas Roedl especially, for the many hours he&#8217;s put in.</p>
+    
+    <p><a href="http://www.jvoorhis.com/">Jeremy Voorhis</a> and <a href="http://www.miettes.ch">Olivier Amblet</a> and <a href="http://www.sans-savoir.net">Yann Lugrin</a> (<a href="http://liquid-concept.ch">http://liquid-concept.ch</a>) are the core dev faithful. Obviously, I wouldn&#8217;t be doing this if it weren&#8217;t for the phenom that is <a href="http://www.rubyonrails.com/">Ruby on Rails</a>. Thanks, <a href="http://www.loudthinking.com/">DHH</a>.</p>
+    
+    <p>All code and accompanying documentation was originally written and is copyrighted by Josh Harvey. It is released under the <span class="caps">MIT</span> license.</p>
+    
+    

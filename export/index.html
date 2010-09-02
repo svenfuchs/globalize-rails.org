@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta generator="adva-cms2" /><meta generator="adva-cms2" /><title>Globalize for Ruby on Rails</title><title>Globalize for Ruby on Rails</title><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script></head><body class="page"><div class="clearing" id="header"><h1>Globalize for Ruby on Rails</h1><p class="navigation" id="login_links"><a href="/users/sign_in?return_to=%2Fpages%2F71" id="login_link">Sign in</a><a href="/users/sign_up" id="signup_link">Sign up</a></p><p class="navigation" id="logout_links" style="display: none;">Logged in as &lt;span class=&quot;user_name&quot;&gt;&lt;/span&gt;<a href="/users/sign_out?return_to=%2Fpages%2F71" id="logout_link">Sign out</a></p><ul id="sections"><a href="/">Home</a><li><a href="/">Home</a></li><a href="/pages">Pages</a><li><a href="/pages">Pages</a></li><a href="/pages/acknowledgements">Acknowledgements</a><li><a href="/pages/acknowledgements">Acknowledgements</a></li><a href="/pages/community">Community</a><li><a href="/pages/community">Community</a></li><a href="/pages/documentation">Documentation</a><li><a href="/pages/documentation">Documentation</a></li><a href="/pages/example-application">Example Application</a><li><a href="/pages/example-application">Example Application</a></li><a href="/pages/features">Features</a><li><a href="/pages/features">Features</a></li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a><li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a></li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a><li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a></li><a href="/pages/how-globalize-works">How Globalize Works</a><li><a href="/pages/how-globalize-works">How Globalize Works</a></li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a><li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a></li><a href="/pages/troubleshooting">Troubleshooting</a><li><a href="/pages/troubleshooting">Troubleshooting</a></li><a href="/pages/unit-tested-example">Unit Tested Example</a><li><a href="/pages/unit-tested-example">Unit Tested Example</a></li></ul></div><div id="page"><div id="main"><h2>Globalize for Rails 1.2 released!!</h2>
+
+<p>The Globalize&#8217;s developer team is happy to annouce the official release of Globalize for Rails 1.2</p>
+
+<p>Besides being compatible with the latest shiny &#38; jaw-dropping Ruby on Rails 1.2 release this Globalize release adds two new major features:</p>
+
+<ul>
+
+<li><a href="http://www.artweb-design.de/2007/1/31/upcoming-globalize-feature-an-alternative-way-of-storing-model-translations">alternative way of storing ModelTranslations in the model table</a></li>
+
+<li>namespaced ViewTranslations</li>
+
+</ul>
+
+<p>For a smooth upgrade please note that a minor change to the database schema is required.</p>
+
+<p><span class="caps"><span class="caps">NOTE</span></span>: If you install the plugin via script/plugin install, then your schema will be automatically updated (default rails environment).</p>
+
+<p>You can also accomplish this by running the included Rake task:</p>
+
+<pre><code>rake globalize:upgrade_schema_to_1_dot_2</code></pre>
+
+<p>(This in fact doesn&#8217;t do anything more than add a string column &#8216;namespace&#8217; to the table globalize_translations, so you could do that manually, too.)</p>
+
+<p class="meta">Posted on 01 Mar 2007</p>
+
+<h2>Overview for busy people</h2>
+
+<p><strong>Globalize</strong> implements three basic types of translation:</p>
+
+<ol>
+
+<li>Dates, currencies, etc: language dependent, but also (often) country/locale dependent. This feature provides convenient methods for relevant data types. <code>12345.67.localize</code> &rarr; <code>12.345,67</code></li>
+
+<li>Content in the database, for specific fields in specific tables: once the <code>translates</code> method is added to the relevant model, the fields indicated with that method call gain the ability to have translated content sitting in the database. An operator (possibly the developer) will need to add these translated texts.</li>
+
+<li>Arbitrary strings: any string that you would like, with added flexiblity for including parameters (for example: &#8216;one&#8217; in the singular form of a phrase and an actual number for the plural form)</li>
+
+</ol>
+
+<p>Using these three mechanisms, all user-facing content ought to be translatable.</p>
+
+<p>For a quick overview of Globalize usage see: <a href="/pages/how-to-use-globalize">How to use</a>. For more walkthroughs, articles and howtos see: <a href="/pages/documentation">Documentation</a></p>
+
+<h2>Screencast(s)</h2>
+
+<p>We&#8217;d like to publish a screencast here &#8211; or better yet, a short screencast for each of several aspects of using Globalize.</p>
+
+<p>If you&#8217;re volunteering for this, please contact us.</p>
+</div></div></body></html>

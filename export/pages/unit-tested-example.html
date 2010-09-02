@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta generator="adva-cms2" /><meta generator="adva-cms2" /><title>Globalize for Ruby on Rails</title><title>Globalize for Ruby on Rails</title><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script></head><body class="page"><div class="clearing" id="header"><h1>Globalize for Ruby on Rails</h1><p class="navigation" id="login_links"><a href="/users/sign_in?return_to=%2Fpages%2F83" id="login_link">Sign in</a><a href="/users/sign_up" id="signup_link">Sign up</a></p><p class="navigation" id="logout_links" style="display: none;">Logged in as &lt;span class=&quot;user_name&quot;&gt;&lt;/span&gt;<a href="/users/sign_out?return_to=%2Fpages%2F83" id="logout_link">Sign out</a></p><ul id="sections"><a href="/">Home</a><li><a href="/">Home</a></li><a href="/pages">Pages</a><li><a href="/pages">Pages</a></li><a href="/pages/acknowledgements">Acknowledgements</a><li><a href="/pages/acknowledgements">Acknowledgements</a></li><a href="/pages/community">Community</a><li><a href="/pages/community">Community</a></li><a href="/pages/documentation">Documentation</a><li><a href="/pages/documentation">Documentation</a></li><a href="/pages/example-application">Example Application</a><li><a href="/pages/example-application">Example Application</a></li><a href="/pages/features">Features</a><li><a href="/pages/features">Features</a></li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a><li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a></li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a><li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a></li><a href="/pages/how-globalize-works">How Globalize Works</a><li><a href="/pages/how-globalize-works">How Globalize Works</a></li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a><li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a></li><a href="/pages/troubleshooting">Troubleshooting</a><li><a href="/pages/troubleshooting">Troubleshooting</a></li><a href="/pages/unit-tested-example">Unit Tested Example</a><li><a href="/pages/unit-tested-example">Unit Tested Example</a></li></ul></div><div id="page"><div id="main"><p>Here&#8217;s a Unit Test (you do know <a href="http://manuals.rubyonrails.com/read/book/5">how to test your Rails app</a>, right?) which shows a way to work with the Globalize plugin. Far easier than playing around in the <a href="http://wiki.rubyonrails.com/rails/pages/Console">console</a> to see if you can get it to work.</p>
+
+<h2>Ensure compatability</h2>
+
+<p>Globalize uses its own models &#8211; e.g. Language, Country and Translation. If you have models or database tables with these names, they might conflict with testing later on. Better now create a migration to rename these tables and then rename the models, and you&#8217;ll be fine.</p>
+
+<h2>Install Globalize</h2>
+
+<p>In your <span class="caps">RAILS</span>_ROOT, execute the following to install the Globalize plugin.</p>
+
+<p>script/plugin install http://svn.globalize-rails.org/svn/globalize/globalize/trunk</p>
+
+<h2>Create the model</h2>
+
+<p>The test assumes the presence of a model called Newsitem. So go ahead and generate the model and modify it like so:</p>
+
+<code><pre>
+
+class Newsitem &lt; ActiveRecord::Base
+
+  translates    :title, :excerpt, :body
+
+end
+
+</pre></code>
+
+<p>See the Globalize <span class="caps">API</span> docs for <a href="http://globalize-docs.diluvia.net/classes/Globalize/DbTranslate/ClassMethods.html#M000008">translates</a>. Basically, it means Globalize will give the specified columns special treatment.</p>
+
+<h2>Create the table</h2>
+
+<p>The following <a href="http://rails.rubyonrails.com/classes/ActiveRecord/Migration.html">migration</a> might help you create the table:</p>
+
+<code><pre>
+
+class AddNewsTable &lt; ActiveRecord::Migration
+
+  def self.up
+
+    create_table :newsitems do |t|
+
+      t.column :title, :string
+
+      t.column :excerpt, :string
+
+      t.column :body, :text
+
+      t.column :lock_version, :integer, :default =&gt; 0
+
+      t.column :user_id, :integer
+
+      t.column :updated_at, :datetime
+
+      t.column :created_at, :datetime
+
+    end
+
+  end
+
+  def self.down
+
+    drop_table :newsitems
+
+  end
+
+end
+
+</pre></code>
+
+<p>You&#8217;re ready to migrate the table into your database by running <code>rake migrate</code>. Of course, not all columns are needed for this example, but it might be an incentive to find the meaning of <a href="http://rails.rubyonrails.com/classes/ActiveRecord/Locking.html">one</a> or <a href="http://rails.rubyonrails.com/classes/ActiveRecord/Timestamp.html">two</a> things in the Rails <span class="caps">API</span>.</p>
+
+<h2>Globalize it</h2>
+
+<code><pre>
+
+script/generate globalize tiny
+
+rake migrate
+
+</pre></code>
+
+<p>This <em>will</em> take a while. You have been warned.</p>
+
+<h2>Setup the test fixtures</h2>
+
+<p>You need to tell globalize which languages/countries it should know about. The previous migration made sure to fill up the globalize tables with a large number of preconfigured languages and countries all ready for you to use in your development database.</p>
+
+<p>However as we are using the test database, you&#8217;ll need to create fixtures for the globalize tables. You can either create them from scratch (Have a look at the globalize tables in your dev tables) or copy over the fixtures used in globalize&#8217;s own test which are located in the test directory<br /><pre><code>
+
+vendor/plugins/globalize/test/fixtures/globalize_languages.yml
+
+#You only really need the languages fixtures but chances are
+
+#you'll want to copy over these two as well for more tests
+
+vendor/plugins/globalize/test/fixtures/globalize_countries.yml
+
+vendor/plugins/globalize/test/fixtures/globalize_translations.yml
+
+</pre></code></p>
+
+<p>The globalize test fixtures do not include dutch so you&#8217;ll have to add it in for the newsitem_test (or you could just modify the test to use any of the languages in the fixtures):</p>
+
+<pre><code>
+
+#globalize_languages.yml
+
+...
+
+dutch:
+
+  id: 7
+
+  iso_639_1: nl
+
+  iso_639_2: nld
+
+  english_name: Dutch
+
+  native_name: Nederlands
+
+  scope: L
+
+  macro_language: false
+
+  pluralization: 'c == 1 ? 1 : 2'
+
+#globalize_countries.yml
+
+...
+
+holland:
+
+  id: 6
+
+  code: NL
+
+  english_name: Netherlands
+
+  currency_format: '€ %n'
+
+  currency_code: EUR
+
+  thousands_sep: '.'
+
+  decimal_sep: ','
+
+  currency_decimal_sep: '.'
+
+</pre></code>
+
+<h2>The Unit Test</h2>
+
+<p>First of all, this is not a real unit test. It&#8217;s just an easy way to show you how to work with Globalize.</p>
+
+<p>When you generated your model, the rails command was smart enough to create a test for it. You can find the test in <span class="caps">RAILS</span>_ROOT/test/unit/newsitem_test.rb. Just copy the paste below and replace the content of the original file with it.</p>
+
+<code><pre>
+
+require File.dirname(__FILE__) + '/../test_helper'
+
+class NewsitemTest &lt; Test::Unit::TestCase
+
+  def test_add_content_translations
+
+    Newsitem.delete_all
+
+    Globalize::Locale.set_base_language('en-US')
+
+    # create a row in the base language
+
+    Globalize::Locale.set('en-US')
+
+    assert_nothing_raised() do
+
+      assert_kind_of Newsitem, Newsitem.create!(:title =&gt; 'US Title',
+
+                                                :excerpt =&gt; 'US excerpt',
+
+                                                :body =&gt; 'US body copy')
+
+    end
+
+    assert_equal 1, Newsitem.find(:all).size
+
+    # retrieve row
+
+    newsitem = Newsitem.find(:first)
+
+    assert_kind_of Newsitem, newsitem
+
+    assert_equal 'US Title', newsitem.title
+
+    # create a translation by switching the locale and updating attributes
+
+    Globalize::Locale.set('nl-NL')
+
+    # newsitem.title = 'NL Titel'
+
+    # newsitem.excerpt = 'NL samenvatting.'
+
+    # newsitem.body = 'NL Broodtekst.'
+
+    # assert_nothing_raised() {newsitem.save!}
+
+    # either use the commented out code above or the line below
+
+    # You cannot fetch a row in one language and save it in another.
+
+    # So just switch language, fetch again, and then update_attributes
+
+    newsitem = Newsitem.find(:first)
+
+    newsitem.update_attributes(:title =&gt; 'NL Titel',
+
+                                :excerpt =&gt; 'NL samenvatting.',
+
+                                :body =&gt; 'NL broodtekst')
+
+    # check if the translated row has been saved
+
+    assert_equal 'NL Titel', newsitem.title
+
+    # check if the base language row still exists
+
+    Globalize::Locale.set('en-US')
+
+    # now see if the example from the wiki gives the expected result
+
+    newsitem = Newsitem.find(:first)
+
+    assert_equal 'US Title', newsitem.title
+
+    Globalize::Locale.set('nl-NL')
+
+    newsitem = Newsitem.find(newsitem.id)
+
+    assert_equal 'NL Titel', newsitem.title
+
+  end
+
+  def test_add_string_translations
+
+    Globalize::Locale.set_base_language('en-US')
+
+    Globalize::Locale.set('en-US')
+
+    language = Globalize::Language.pick 'nl-NL'
+
+    Globalize::Locale.set_translation(
+
+      "This is written in English",
+
+      language,
+
+      "Dit is geschreven in het Nederlands"
+
+    )
+
+    assert_equal 'This is written in English', "This is written in English".t
+
+    Globalize::Locale.set('nl-NL')
+
+    assert_equal 'Dit is geschreven in het Nederlands', "This is written in English".t
+
+  end
+
+end
+
+</pre></code>
+
+<h2>Run the test</h2>
+
+<p>From your <span class="caps">RAILS</span>_ROOT, run the test. The expected result should be something like shown below.</p>
+
+<code><pre>
+
+aluminum:~/dev/projects/my_app/trunk charles$ ruby test/unit/newsitem_test.rb
+
+Loaded suite test/unit/newsitem_test
+
+Started
+
+..
+
+Finished in 1.986655 seconds.
+
+2 tests, 10 assertions, 0 failures, 0 errors
+
+aluminum:~/dev/projects/my_app/trunk charles$
+
+</pre></code>
+
+<h2>Help!</h2>
+
+<p>If you have more questions, you can find us in #globalize on Freenode or on the Rails mailing list. Make sure the first word of your subject line is Globalize, so your message is easier to spot.</p>
+</div></div></body></html>

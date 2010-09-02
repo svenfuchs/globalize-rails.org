@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta generator="adva-cms2" /><meta generator="adva-cms2" /><title>Globalize for Ruby on Rails</title><title>Globalize for Ruby on Rails</title><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script></head><body class="page"><div class="clearing" id="header"><h1>Globalize for Ruby on Rails</h1><p class="navigation" id="login_links"><a href="/users/sign_in?return_to=%2Fpages%2F77" id="login_link">Sign in</a><a href="/users/sign_up" id="signup_link">Sign up</a></p><p class="navigation" id="logout_links" style="display: none;">Logged in as &lt;span class=&quot;user_name&quot;&gt;&lt;/span&gt;<a href="/users/sign_out?return_to=%2Fpages%2F77" id="logout_link">Sign out</a></p><ul id="sections"><a href="/">Home</a><li><a href="/">Home</a></li><a href="/pages">Pages</a><li><a href="/pages">Pages</a></li><a href="/pages/acknowledgements">Acknowledgements</a><li><a href="/pages/acknowledgements">Acknowledgements</a></li><a href="/pages/community">Community</a><li><a href="/pages/community">Community</a></li><a href="/pages/documentation">Documentation</a><li><a href="/pages/documentation">Documentation</a></li><a href="/pages/example-application">Example Application</a><li><a href="/pages/example-application">Example Application</a></li><a href="/pages/features">Features</a><li><a href="/pages/features">Features</a></li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a><li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a></li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a><li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a></li><a href="/pages/how-globalize-works">How Globalize Works</a><li><a href="/pages/how-globalize-works">How Globalize Works</a></li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a><li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a></li><a href="/pages/troubleshooting">Troubleshooting</a><li><a href="/pages/troubleshooting">Troubleshooting</a></li><a href="/pages/unit-tested-example">Unit Tested Example</a><li><a href="/pages/unit-tested-example">Unit Tested Example</a></li></ul></div><div id="page"><div id="main"><h2>Translation</h2>
+
+<ul>
+
+<li>Supports translation of views and db content.</li>
+
+<li>Supports pluralization, even in languages with multiple plural forms like Polish, via the String division method (&#8217;/&#8217;).</li>
+
+<li>Automatic routing to locale-specific templates (e.g. show.es-ES.ESrhtml).</li>
+
+<li>Automatically chooses locale-specific ActionMailer templatesemplate.</li>
+
+</ul>
+
+<h2>Easy to Use</h2>
+
+<ul>
+
+<li>It&#8217;s transparent: You&#8217;ll mostly just use <code>Locale.set</code>, <code>"string".t</code>, and <code>translates :field</code>. The rest is automatic.</li>
+
+<li>All translation and localization data is in three database tables: <codede>globalize_countries</code>, <code>globalize_languages</code>, and <code>globalize_translations</code>.</li>
+
+<li>Comes with a free <code>Currency</code> class, especially designed for Rails. Prints out numbers correctly for each locale, and supports currency formatting (¥2300.00, 23&nbsp;000,00&nbsp;kr). Values are stored internally and in the database as integers, for maximum precision.</li>
+
+</ul>
+
+<h2>Built-in Data</h2>
+
+<ul>
+
+<li>Comprehensive list of 7599 languages and 239 countries, with pluralization rules, native language names (Spanish is Español) and number formatting.</li>
+
+<li>Supplies Time#localize and Date#localizeize to print out times and dates in strftime format in 92 languages. Other languages can be added by simply supplying translations.</li>
+
+</ul>
+
+<h2>Efficiency</h2>
+
+<ul>
+
+<li>Efficient querying for db translations. One DB call loads models and translations for current language.   </li>
+
+<li>Additionally, there&#8217;s a <em>piggyback</em> feature for associations. So, <code>Product.find(:all, :include_translated =&gt; :manufacturer)</code> is one DB call, but gives you <code>product.manufacturer_name</code> in your current language.</li>
+
+<li>Caches view translations to cut down on db queryingries.</li>
+
+</ul>
+
+<h2>Databases</h2>
+
+<ul>
+
+<li>Supports PostgreSQL, MySQL and Sqlite3</li>
+
+</ul>
+
+<p>And, it&#8217;s ridiculously easy to add to your app.</p>
+
+<h1>Comparison to others</h1>
+
+<p>Globalize is generally said to be the most powerful all-in-one solution for Internationalization of Ruby on Rails applications.</p>
+
+<p>(more to come soon &#8230; until then please refer to <a href="http://wiki.rubyonrails.org/rails/pages/InternationalizationComparison">the comparison</a> on the Rails wiki.)</p>
+</div></div></body></html>

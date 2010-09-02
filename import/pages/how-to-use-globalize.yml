@@ -1,0 +1,72 @@
+---
+  title: how-to-use-globalize
+  body: |
+    <h2>In your models</h2>
+    
+    <pre><code>
+    
+      class Product &lt; ActiveRecord::Base
+    
+        translates :name, :description, :specs
+    
+      end
+    
+    </code></pre>
+    
+    <p>Create a row and its translation:</p>
+    
+    <pre><code>
+    
+      Locale.set_base_language('en-US')
+    
+      Locale.set('en-US')
+    
+      Product.create!(:name =&gt; 'Meatballs')
+    
+      Locale.set('es-ES')
+    
+      prod = Product.find(1)
+    
+      prod.name = 'Albóndigas'
+    
+      prod.save
+    
+    </code></pre>
+    
+    <p>Then:</p>
+    
+    <pre><code>
+    
+      Locale.set("en-US")
+    
+      prod = Product.find(1)
+    
+      prod.name -&gt; "Meatballs"
+    
+      Locale.set("es-ES")
+    
+      prod = Product.find(1)
+    
+      prod.name -&gt; "Albóndigas"
+    
+    </code></pre>
+    
+    <h2>In your views (or anywhere else)</h2>
+    
+    <pre><code>
+    
+      Locale.set("he-IL")
+    
+      &lt;%= "Thanks for ordering!".t %&gt; -&gt; "תודה על ההזמנה!"
+    
+      &lt;%= "You've got %d items in your cart" / 5 %&gt; -&gt; "יש 5 מוצרים בסל שלך"
+    
+      Locale.set("es-ES")
+    
+      &lt;%= Time.now.localize("%d %B %Y") %&gt; -&gt; "17 Octubre 2005"
+    
+      &lt;%= 12345.45.localize %&gt; -&gt; "12.345,45"
+    
+    </code></pre>
+    
+    <p>There&#8217;s more, see <a href="/pages/features" class="existingWikiWord">Features</a>.</p>

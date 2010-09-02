@@ -1,0 +1,26 @@
+---
+  title: Globalize Powered Sites
+  body: |
+    <ul>
+    
+        <li><a href="http://rashgash.com">Rash Gash Guitars</a> &#8212; This is the reason Globalize exists. I needed the site to work in English and Hebrew.</li>
+    
+        <li><a href="http://www.crispynews.com">CrispyNews</a> &#8212; Create your own community news site! We&#8217;ve gotten alot of international interest in our application, but we only support english. We&#8217;re currently installing globalize and our intention is to have a globalization module that&#8217;ll let anyone port crispynews into their own language. <br /><br />Update: Globalize was successfully installed, and we&#8217;ve even extended it into an interesting &#8220;fun project&#8221; which retreives automatic translations from sites like Babelfish and Google translate for phrases that have not been translated yet. The translations are not really usable without significant modification, but those interested in making similar enhancements can read the article <a href="http://blog.kenlet.com/articles/2006/03/31/internationalization-with-the-help-of-google-translate">Internationalization with Rails, Globalize and Google</a> We chose it over some other Ruby globalization libraries because of its rails-y feel. We look forward to continually incorporating future versions as they make further optimizations and improvements are released. &#8211; <em>crispynews coders</em>.</li>
+    
+        <li><a href="http://www.oleb.net/southamerica">South America Travelogue</a> &#8212; Photos, travel stories and a map of my 8-month backpacking trip through South America. All in English and German using Globalize &#8211; <em>Ole Begemann</em>.</li>
+    
+        <li><a href="http://www.latvijapasaule.lv">Equal project</a> &#8212; This is Latvia&#8217;s government project site.</li>
+    
+        <li><a href="http://media.nikefootball.com/">media.nikefootball.com</a> &#8211; provides multimedia content to the press for Nike&#8217;s 2006 football campaign. Also the subject of screenshots in Jeremy Voorhis&#8217; slides from the Canada on Rails Globalize talk.</li>
+    
+        <li><a href="http://www.trikr.net/">www.trikr.net</a> &#8211; A collaborate project time tracker tool.</li>
+    
+        <li><a href="http://www.keysearch.ch">www.keysearch.ch</a> &#8212; Banking Executive Search in Switzerland</li>
+    
+        <li><a href="http://www.sgsm.ch">www.sgsm.ch</a> &#8212; Schweizerische Gesellschaft für Sportmedizin</li>
+    
+        <li><a href="http://www.filipcic.com">Tomislav Filipčić &#8211; Photography</a> &#8212; Art photography. In English and Croatian using globalize.</li>
+    
+    </ul>
+    
+    

@@ -1,0 +1,586 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta content="text/html; charset=utf-8" http-equiv="Content-Type" /><meta generator="adva-cms2" /><meta generator="adva-cms2" /><title>Globalize for Ruby on Rails</title><title>Globalize for Ruby on Rails</title><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><link href="/stylesheets/adva_core/default.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/common.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/adva_core/forms.css" media="screen" rel="stylesheet" type="text/css" /><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script><script src="/javascripts/adva-core/jquery/jquery.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-lowpro.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery/jquery-ui.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/json.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/cookie.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.flash.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.roles.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/jquery.dates.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/parseuri.js" type="text/javascript"></script>
+<script src="/javascripts/adva-core/application.js" type="text/javascript"></script></head><body class="page"><div class="clearing" id="header"><h1>Globalize for Ruby on Rails</h1><p class="navigation" id="login_links"><a href="/users/sign_in?return_to=%2Fpages%2F76" id="login_link">Sign in</a><a href="/users/sign_up" id="signup_link">Sign up</a></p><p class="navigation" id="logout_links" style="display: none;">Logged in as &lt;span class=&quot;user_name&quot;&gt;&lt;/span&gt;<a href="/users/sign_out?return_to=%2Fpages%2F76" id="logout_link">Sign out</a></p><ul id="sections"><a href="/">Home</a><li><a href="/">Home</a></li><a href="/pages">Pages</a><li><a href="/pages">Pages</a></li><a href="/pages/acknowledgements">Acknowledgements</a><li><a href="/pages/acknowledgements">Acknowledgements</a></li><a href="/pages/community">Community</a><li><a href="/pages/community">Community</a></li><a href="/pages/documentation">Documentation</a><li><a href="/pages/documentation">Documentation</a></li><a href="/pages/example-application">Example Application</a><li><a href="/pages/example-application">Example Application</a></li><a href="/pages/features">Features</a><li><a href="/pages/features">Features</a></li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a><li><a href="/pages/frequently-asked-questions">Frequently Asked Questions</a></li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a><li><a href="/pages/globalize-powered-sites">Globalize Powered Sites</a></li><a href="/pages/how-globalize-works">How Globalize Works</a><li><a href="/pages/how-globalize-works">How Globalize Works</a></li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a><li><a href="/pages/how-to-use-globalize">how-to-use-globalize</a></li><a href="/pages/troubleshooting">Troubleshooting</a><li><a href="/pages/troubleshooting">Troubleshooting</a></li><a href="/pages/unit-tested-example">Unit Tested Example</a><li><a href="/pages/unit-tested-example">Unit Tested Example</a></li></ul></div><div id="page"><div id="main"><p><strong>NOTE</strong><br />If you want the latest <span class="caps">API</span> reference for globalize plugin, run <code>rake doc:plugins</code> to generate rdoc documentation. You can find it later in <code>app/doc/plugins/globalize</code> directory.</p>
+
+<p><strong>NOTE</strong><br />You need to apply some changes below to <a href="http://wiki.globalize-rails.org/wiki/pages/Examplary+application+Oracle">make it work with Oracle</a>.</p>
+
+<h2>2. Creating rails application</h2>
+
+<p>Firstly create a very simple rails app (just one table) to work with.<br /><pre><code>rails globalize</code></pre><br />This should create a skeleton of your application.</p>
+
+<p>Now you need to create a database to work with, i.e. &#8220;globalize_development&#8221; and configure <code>config/database.yml</code> file correctly.</p>
+
+<p>Next create the only model:<br /><pre><code>script/generate model Product</code></pre><br />This will create also a migrate file <code>db/migrate/001_create_products.rb</code>, which you can use to create <code>products</code> table.<br /><pre><code>
+
+class CreateProducts &lt; ActiveRecord::Migration
+
+  def self.up
+
+    create_table :products do |t|
+
+      t.column :name, :string
+
+      t.column :company, :string
+
+      t.column :description, :text
+
+      t.column :price, :integer, :default =&gt; 0
+
+      t.column :created_on, :date
+
+      t.column :updated_on, :date
+
+    end
+
+  end
+
+  def self.down
+
+    drop_table :products
+
+  end
+
+end
+
+</code></pre><br />Run<br /><pre><code>rake migrate</code></pre><br />and if there were no errors you should have new <code>products</code> table in your database.</p>
+
+<p>Now you can add some functionality to your app:<br /><pre><code>
+
+script/generate scaffold admin/product
+
+script/generate controller product
+
+</code></pre><br />The first line will generate the whole admin panel for your <code>products</code> table and the second one will add a controller, which will be used by &#8220;user&#8221; part of the app.</p>
+
+<p>Now it&#8217;s time for some cosmetic changes:</p>
+
+<ul>
+
+<li>remove created_on and updated_on input elements from <code>app/views/admin/products/_form.rhtml</code> partial &#8211; you don&#8217;t need them as they these fields are updated automatically</li>
+
+<li>copy index, list and show actions from <codee>app/controllers/admin/products_controller.rb</code> to <code>app/controllers/product_controller.rb</code></li>
+
+<li>copy <code>list.rhtml</code> and <code>show.rhtml</code> files from <code>app/views/admin/products/</code> to <code>app/views/product/</code></li>
+
+<li>remove <code>edit</code>, <code>destroy</destroycode> and <code>new</code> functionality from <code>list.rhtml</code> and <code>show.rhtml</code> files you&#8217;ve just copied</li>
+
+<li>delete or rename 	<code>public/index.html</code></li>
+
+<li>add layouts for admin and userr parts</li>
+
+</ul>
+
+<p>Next add routing rules for user and admin parts. Add these 2 lines to your <code>config/routes.rb</code> file:<br /><pre><code>
+
+# You can have the root of your site routed by hooking up ''
+
+# -- just remember to delete public/index.html.
+
+map.connect '', :controller =&gt; 'product', :action =&gt; 'index'
+
+map.connect 'admin', :controller =&gt; 'admin/products', :action =&gt; 'index'
+
+</code></pre></p>
+
+<p>Now you&#8217;ve got your own basic rails app with full <span class="caps">CRUD</span> functionality for admin and read functionality for user.</p>
+
+<h2>3. Installing globalize plugin</h2>
+
+<p>To install the plugin just type:<br />script/plugin install <a href="svn://svn.globalize-rails.org/globalize/branches/for-1.1">svn://svn.globalize-rails.org/globalize/branches/for-1.1</a></p>
+
+<p>Now go to <code>vendor/plugins</code> and rename <code>for-1.1</code> directory to <code>globalize</code>.</p>
+
+<p>Now run:<br /><pre><code>rake globalize:setup</code></pre><br />and you&#8217;ve just finished installing globalize!</p>
+
+<p><strong>NOTE</strong><br />You can run <code>rake -T</code> to see all available rake tasks &#8211; including these added by globalize.</p>
+
+<p><strong>WARNING</strong><br />In current revision (197) there&#8217;s a problem with <code>built_in</code> column in <code>globalize_translation</code> table, which causes all translations added by the user to be marked as built in.<br />I&#8217;m not sure if it&#8217;s just problem with my configuration, but to check if you also have this problem, type this in the console:<br /><pre><code>
+
+include Globalize
+
+Locale.set "en-US"
+
+Locale.set_translation("foo", "bar")
+
+ViewTranslation.find(:first, :conditions =&gt; "tr_key = 'foo'").built_in?
+
+</code></pre><br />If you get false, then your translation is not being set as built-in and everything is ok. <br />If not, close the console and open the file <code>vendor/plugins/globalize/tasks/data.rake</code> and change line #63:<br /><code>t.column :built_in, :boolean, :default =&gt; true</code><br />to<br /><code>t.column :built_in, :boolean#, :default =&gt; true</code><br />Now run<br /><pre><code>
+
+rake globalize:teardown
+
+rake globalize:setup
+
+</code></pre><br />Open the console and set all fields in globalize_translation table as built_in<br /><pre><code>
+
+include Globalize
+
+ViewTranslation.update_all "built_in = true"
+
+</code></pre><br />Now it should work correctly: all translations that already exist in the table should be marked as built-in and all new translations added by you won&#8217;t be anymore.<br />Note that due to the unorthodox way Globalize handles the database (without migrations), this change won&#8217;t be reflected in <code>schema.rb</code>.</p>
+
+<h2>4. Making your application globalized</h2>
+
+<h3>4.1 Configuration</h3>
+
+<p>First you need to set the base language. Add these lines to <code>config/environment.rb</code> file:<br /><pre><code>
+
+# Include your application configuration below
+
+include Globalize
+
+Locale.set_base_language 'en-US'
+
+LOCALES = {'pl' =&gt; 'pl-PL',
+
+           'en' =&gt; 'en-US',
+
+           'es' =&gt; 'es-ES',
+
+           'fr' =&gt; 'fr-FR'}.freeze
+
+</code></pre><br />Of course you can select any language as your base language. In <span class="caps">LOCALES</span> hash we will store all available locales for this app. Remember to restart the server after you made changes in <code>environment.rb</code> file.</p>
+
+<p><strong>NOTE</strong><br />It&#8217;s important to never change the base language once you&#8217;ve started populating the database.</p>
+
+<p>You can pass the information about the language, which should be displayed, in the session variable or in the url. Here just the second method is presented, as it allows you i.e. to bookmark the page in selected language etc.</p>
+
+<p>Now you need to modify your <code>config/routes.rb</code> file a bit. Add this line before the lines you added before:<br /><pre><code>
+
+map.connect ':locale/:controller/:action/:id'
+
+</code></pre></p>
+
+<p>You also need to set the current language somewhere. Edit your <code>app/controllers/application.rb</code> file:<br /><pre><code>
+
+class ApplicationController &lt; ActionController::Base
+
+  before_filter :set_locale
+
+  def set_locale
+
+    if !params[:locale].nil? &#38;&#38; LOCALES.keys.include?(params[:locale])
+
+      Locale.set LOCALES[params[:locale]]
+
+    else
+
+      redirect_to params.merge( 'locale' =&gt; Locale.base_language.code )
+
+    end
+
+  end
+
+end
+
+</code></pre></p>
+
+<p>Try to display your main page again &#8211; you should see &#8220;en&#8221; in the url before the controller name.</p>
+
+<p>Now just add possibility to switch between languages and move to the next chapter.</p>
+
+<p>To switch between languages you can use i.e. following link:<br /><pre><code>
+
+&lt;%= link_to "pl", {:controller =&gt; controller.controller_name, :action =&gt; controller.action_name, :locale =&gt; 'pl', :id =&gt; params[:id]} %&gt;
+
+</code></pre><br />This will display current page in selected language, but it will only work with the default route.</p>
+
+<p><strong>NOTE</strong><br />You could iterate through <span class="caps">LOCALE</span> hash to create a link for every supported language or create select input field.</p>
+
+<p><strong>NOTE by <a href="http://www.marc-andre.ca">Marc-André Lafortune</a> </strong><br />I prefer to use the preferences set in the user&#8217;s client to determine the default locale. The user can then decide to override it by clicking on a button you provide, in which case I want to store that in a cookie so that preference is remembered forever. Here&#8217;s my filter:<br /><pre><code>
+
+# Will set the cookie 'locale' if (and only if) an explicit parameter 'locale'
+
+# is passed (and is acceptable)
+
+# If no cookie exists, we look through the list of desired languages for the
+
+# first one we can accept.
+
+#
+
+  def set_locale
+
+    accept_locales = LOCALES.keys # change this line as needed, must be an array of strings
+
+    cookies[:locale] = params[:locale] if accept_locales.include?(params[:locale])
+
+    Locale.set(cookies[:locale] || (request.env["HTTP_ACCEPT_LANGUAGE"] || "").scan(/[^,;]+/).find{|l| accept_locales.include?(l)})
+
+  end
+
+</code></pre></p>
+
+<h3>4.2 Translating static content.</h3>
+
+<p>First you need to generate translate controller.<br /><pre><code>
+
+script/generate controller admin/translate
+
+</code></pre><br />Now edit your new controller:<br /><pre><code>
+
+class Admin::TranslateController &lt; ApplicationController
+
+  def index
+
+    @view_translations = ViewTranslation.find(:all, :conditions =&gt; [ 'built_in IS NULL AND language_id = ?', Locale.language.id ], :order =&gt; 'text')
+
+  end
+
+  def translation_text
+
+    @translation = ViewTranslation.find(params[:id])
+
+    render :text =&gt; @translation.text || ""
+
+  end
+
+  def set_translation_text
+
+    @translation = ViewTranslation.find(params[:id])
+
+    previous = @translation.text
+
+    @translation.text = params[:value]
+
+    @translation.text = previous unless @translation.save
+
+    render :partial =&gt; "translation_text", :object =&gt; @translation.text
+
+  end
+
+end
+
+</code></pre><br />Let&#8217;s focus on the index action. We fetch all non-built-in translations for current locale and order them by <code>text</code> column. This will put all untranslated fields at the beginning of <code>@view_translation</code> array.<br />You can change the conditions i.e.:<br /><pre><code>
+
+  def index
+
+    @view_translations = ViewTranslation.find(:all,
+
+      :conditions =&gt; [ 'text IS NULL AND language_id = ?', Locale.language.id ], :order =&gt; 'tr_key')
+
+  end
+
+</code></pre><br />This way you&#8217;ll get untranslated fields only.<br />Remember to set <code>admin</code> layout for this controller.</p>
+
+<p>Now create <code>app/views/admin/translate/_translation_text.rhtml</code> partial, which is used in <code>translation_text</code> action.<br /><pre><code>
+
+&lt;%= translation_text || '[no translation]' %&gt;
+
+</code></pre><br />To translate the static content you can use in_place_editor helper, which is built-in in Rails 1.1. Just remember to add <br /><pre><code>
+
+&lt;%= javascript_include_tag :defaults %&gt;
+
+</code></pre><br />in the layout file for the admin part (e.g. create an application-wide <code>app/views/layouts/application.rhtml</code> layout &#8211; you can copy most of the generated <code>products.rhtml</code> layout there, just change the title and add the javascript tag).</p>
+
+<p>Next create <code>app/views/admin/translate/_translation_form.rhtml</code> partial for the form, which will be used to provide translations.<br /><pre><code>
+
+&lt;!--[form:translate]--&gt;
+
+&lt;p&gt;
+
+&lt;label for="tr_&lt;%= tr.id %&gt;"&gt;&lt;%=tr.tr_key%&gt;&lt;/label&gt;
+
+&lt;br /&gt;
+
+&lt;span id="tr_&lt;%= tr.id %&gt;"&gt;
+
+&lt;%= render :partial =&gt; 'translation_text', :object =&gt; tr.text %&gt;
+
+&lt;/span&gt;
+
+&lt;%= in_place_editor "tr_#{tr.id}",
+
+    :url =&gt; { :action =&gt; :set_translation_text, :id =&gt; tr.id },
+
+    :load_text_url =&gt; url_for({ :action =&gt; :translation_text, :id =&gt; tr.id })%&gt;
+
+&lt;/p&gt;
+
+&lt;!--[eoform:translate]--&gt;
+
+</code></pre></p>
+
+<p><strong>NOTE</strong><br />If you want more information about in_place_editor helper look <a href="http://api.rubyonrails.com/classes/ActionView/Helpers/JavaScriptMacrosHelper.html#M000461">here</a>.</p>
+
+<p>In the next step we will use 2 useful helpers. Add the following code to <code>app/helpers/application_helper.rb</code> file:<br /><pre><code>
+
+  def base_language_only
+
+    yield if Locale.base?
+
+  end
+
+  def not_base_language
+
+    yield unless Locale.base?
+
+  end
+
+</code></pre></p>
+
+<p><strong>NOTE</strong><br />These helpers come from Jeremy Voorhis’ Canada on Rails slides, which you can find <a href="http://www.jvoorhis.com/media/globalizing-rails.pdf">here</a>.</p>
+
+<p>Still in <code>app/views/admin/translate</code>, create <code>index.rhtml</code> and edit it:<br /><pre><code>
+
+&lt;% base_language_only do -%&gt;
+
+&lt;div id="language"&gt;&lt;h1&gt;Please choose language for translation&lt;/h1&gt;&lt;/div&gt;
+
+&lt;% end -%&gt;
+
+&lt;% not_base_language do -%&gt;
+
+&lt;div id="language"&gt;&lt;h1&gt;&lt;%= "Language: " + Locale.language.native_name %&gt;&lt;/h1&gt;&lt;/div&gt;
+
+&lt;div&gt;
+
+&lt;% @view_translations.each do |tr| -%&gt;
+
+  &lt;%= render :partial =&gt; 'translation_form', :locals =&gt; {:tr =&gt; tr}%&gt;
+
+&lt;% end -%&gt;
+
+&lt;/div&gt;
+
+&lt;% end  -%&gt;
+
+</code></pre></p>
+
+<p>We don&#8217;t want to translate english strings to english again, so the translation forms will only be displayed if current language is different than the base one.</p>
+
+<p>Add a new product if you haven&#8217;t done this already &#8211; go to <code>localhost:3000/admin/</code>, press &#8216;New product&#8217; and fill out the form.</p>
+
+<p>Open <code>app/views/product/list.rhtml</code> and <code>show.rhtml</code> and add <code>.t</code> method to all strings you want to translate i.e. change <code>'Show'</code> to <code>'Show'.t</code> etc. This way you&#8217;ll get translated user part of the application.</p>
+
+<p>To add these strings to the database they must be displayed first, so go to <code>localhost:3000/pl/product</code>. Next go to <code>localhost:3000/pl/admin/translate</code>. You should see the list of strings to which you&#8217;ve added <code>.t</code> method. Translate them and go to <code>localhost:3000/pl/product</code> again.</p>
+
+<strong>NOTE</strong><br />If you don&#8217;t get any strings on <code>localhost:3000/pl/admin/translate</code> page to translate, make sure that:
+
+<ul>
+
+<li>you&#8217;re not displaying that page with the base locale</li>
+
+<li>youou added <code>.t</code> method to the strings</li>
+
+<li>you displayed pages, to which you added <code>.t</code> method</li>
+
+</ul>
+
+<p><strong>NOTE</strong><br />Here&#8217;s useful thread showing how to add untranslated strings automatically: <a href="http://rubyforge.org/pipermail/railsi18n-discussion/2006-August/000124.html">http://rubyforge.org/pipermail/railsi18n-discussion/2006-August/000124.html</a></p>
+
+<h3>4.3 Translating model data.</h3>
+
+<p>First you need to decide which fields you want to translate. In our Product model we&#8217;ll translate <code>name</code> and <code>description</code> fields.</p>
+
+<p>Add this line to <code>app/models/product.rb</code>:<br /><pre><code>
+
+translates :name, :description
+
+</code></pre></p>
+
+<p>We will allow adding new products only for the base language. Modify <code>app/views/admin/products/list.rhtml</code> file:<br /><pre><code>
+
+&lt;% base_language_only do -%&gt;
+
+&lt;%= link_to 'New product', :action =&gt; 'new' %&gt;
+
+&lt;% end -%&gt;
+
+</code></pre></p>
+
+<p>In the same directory create new file <code>_translation_form.rhtml</code>. Copy contents of <code>_form.rhtml</code> partial to this new file, but remove company and price input fields as they won&#8217;t be translated. As you may have already figured out this form will be used to provide translations for the Product model.</p>
+
+<p>Now create another file <code>_translation_data.rhtml</code> and put the following code inside:<br /><pre><code>
+
+&lt;div&gt;
+
+  &lt;b&gt;Name:&lt;/b&gt; &lt;%=h @product.name %&gt;
+
+  &lt;b&gt;Description:&lt;/b&gt; &lt;%=h @product.description %&gt;
+
+&lt;/div&gt;
+
+</code></pre><br />This file will be used as the reference and will show data in the base language.</p>
+
+<p>Now it&#8217;s time to modify <code>edit.rhtml</code> file.<br /><pre><code>
+
+&lt;h1&gt;Editing product&lt;/h1&gt;
+
+&lt;% base_language_only do -%&gt;
+
+  &lt;%= start_form_tag :action =&gt; 'update', :id =&gt; @product %&gt;
+
+    &lt;%= render :partial =&gt; 'form' %&gt;
+
+    &lt;%= submit_tag 'Edit' %&gt;
+
+  &lt;%= end_form_tag %&gt;
+
+&lt;% end -%&gt;
+
+&lt;% not_base_language do -%&gt;
+
+&lt;div style="float:left;"&gt;
+
+  &lt;h2&gt;&lt;%= Locale.language.native_name%&gt;&lt;/h2&gt;
+
+  &lt;%= start_form_tag( {:action =&gt; 'update', :id =&gt; @product} ) %&gt;
+
+    &lt;%= render :partial =&gt; 'translation_form' %&gt;
+
+    &lt;%= submit_tag 'save translation' %&gt;
+
+  &lt;%= end_form_tag %&gt;
+
+&lt;/div&gt;
+
+&lt;div style="float:right;"&gt;
+
+  &lt;% @product.switch_language(Locale.base_language.code) do -%&gt;
+
+    &lt;h2&gt;&lt;%= Locale.base_language.native_name%&gt;&lt;/h2&gt;
+
+    &lt;%= render :partial =&gt; 'translation_data' %&gt;
+
+  &lt;% end -%&gt;
+
+&lt;/div&gt;
+
+&lt;% end -%&gt;
+
+&lt;%= link_to 'Show', :action =&gt; 'show', :id =&gt; @product %&gt; |
+
+&lt;%= link_to 'Back', :action =&gt; 'list' %&gt;
+
+</code></pre><br />Navigate to <code>localhost:3000/pl/admin/products</code>, find the product you added, and click on Edit.<br />If the current language is the base one, the full version of the edit form is displayed. If not, the translation form is displayed on the left and the original data on the right, as the reference for the translator.</p>
+
+<p><strong>NOTE</strong><br /><code>.switch_language</code> method used in this code is provided by <code>globalize_extension</code> plugin written by Olivier Amblet from Liquid Concept, which can be found <a href="http://opensvn.liquid-concept.com/trac/globalize_extension">here</a>. It provides many other useful extensions for globalize plugin. Just install it into your <code>vendor/plugins</code> directory</p>
+
+<p><strong>NOTE</strong><br />If you&#8217;re going to translate many models it would probably be good idea to put the code above into a partial and just pass an object to translate:<br /><pre><code>
+
+render :partial "translation_page", :locals =&gt; {:object =&gt; @product}
+
+</code></pre></p>
+
+<p>To inform user that the text hasn&#8217;t been yet translated you can use the following helper (also from Jeremy Voorhis’ slides mentioned above):<br /><pre><code>
+
+  def translation_availability_for object_name, facet, message = nil
+
+    not_base_language do
+
+      message ||= content_tag 'p', '(Translation not available)'.t
+
+      object = instance_variable_get "@#{object_name}"
+
+      message if object &#38;&#38; !object.send( facet ).blank? &#38;&#38;
+
+      object.send( "#{facet}_is_base?" )
+
+    end
+
+  end
+
+</code></pre><br />Here&#8217;s the example of its usage:<br /><pre><code>
+
+&lt;%= translation_availability_for :product, :description %&gt;
+
+&lt;%=h @product.description %&gt;
+
+</code></pre></p>
+
+<h3>4.4 Translating dates</h3>
+
+<p>To translate dates you can use <code>localize</code> method or its shorter form <code>loc</code>. It takes format string as the paramater, exactly the same as <code>strftime</code> method.<br />I.e.<br /><pre><code>
+
+Product.find(:first).created_on.loc("%A %d-%B-%Y")
+
+</code></pre><br />should give &#8220;Wednesday 14-June-2006&#8221; for English language and &#8220;Środa 14-Czerwiec-2006&#8221; for Polish.</p>
+
+<p><code>countries</code> table has field <code>date_format</code>, which you can use to specify custom format for different languages. Example for Polish language:<br /><pre><code>
+
+country = Country.find(:first, :conditions =&gt; "code = 'PL'")
+
+country.update_attribute(:date_format, "%d/%m/%y")
+
+</code></pre><br />Globalize uses cache to minimize database usage, so sometimes you need to clear it to make changes visible:<br /><pre><code>
+
+Locale.clear_cache
+
+Locale.set "pl-PL"
+
+Locale.country.date_format
+
+</code></pre><br />Now you can just use<br /><pre><code>
+
+product.created_on.loc(Locale.country.date_format)
+
+</code></pre><br />and you&#8217;ll get different date format for every language.</p>
+
+<p>In a template use for example:<br /><pre><code>
+
+@product.send(column.name).localize("%d %B %Y") if column.name.to_s == 'created_on'
+
+</pre></code></p>
+
+<h3>4.5 Translating error messages</h3>
+
+<p>Globalize provides modified version of <code>error_messages_for</code> helper. Unfortunatelly it doesn&#8217;t have translated error messages in the database yet. But you can easily add them by yourself. Here&#8217;s how to do it.</p>
+
+<p>&#8212;-<br /><em>I couldn&#8217;t find any way to do it on this page, so I came up with my own solution, using the rails console script. Fairly simple:</em><br /><pre><code>
+
+Locale.set 'pl-PL' # you might want to iterate throught LOCALES.each_value here
+
+ActiveRecord::Errors.default_error_messages.each_value do |error_msg|
+
+  error_msg.translate
+
+end
+
+</code></pre></p>
+
+<p><em>Benol</em></p>
+
+<p>and if your base language isn&#8217;t English?<br />&#8212;-</p>
+
+<h3>4.6 Translating currency</h3>
+
+<p><strong>WARNING</strong><br />Current implementation of Currency class has some bugs. They should be fixed in the next revision.</p>
+
+Globalize provides specialized class to represent money in ActiveRecord models &#8211; Globalize::Currency.<br />To use it you need to modify <code>app/models/product.rb</code> file. Add the following line:<br /><pre><code>
+
+composed_of :price, :class_name =&gt; "Globalize::Currency", :mapping =&gt; [ %w(price cents) ]
+
+</code></pre><br />Now <code>product.price</code> will return Globalize:Currency object. To display the actual value you&#8217;ve got 2 possibilities:
+
+<ul>
+
+<li>.to_s method</li>
+
+<li>.formatt method, which can take optional parameters: if :code => true is specified, format using international 3-letter currency code; if :country is specified as well, use that country’s currency code for formatting</li>
+
+</ul>
+
+<p>Text by: <a href="http://www.globalize-rails.org/wiki/pages/szymek">szymek</a> (83.15.148.82)</p>
+</div></div></body></html>
