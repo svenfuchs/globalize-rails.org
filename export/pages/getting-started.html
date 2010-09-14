@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html><head><meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+<meta generator="adva-cms2" />
+<meta generator="adva-cms2" />
+<title>Globalize for Ruby on Rails</title>
+<title>Globalize for Ruby on Rails</title>
+<link href="/stylesheets/globalize.css?1283777273" media="screen" rel="stylesheet" type="text/css" />
+<link href="/stylesheets/globalize.css?1283777273" media="screen" rel="stylesheet" type="text/css" />
+</head>
+<body><div id="page"><div id="header"><h1><a href="/">Globalize<span>for Ruby on Rails</span></a>
+</h1>
+<h2>Webapplication Internationalization that doesn't hurt</h2>
+<ul id="main-nav"><li><h3><a href="/">What is Globalize?</a>
+</h3>
+<a href="#news">News</a>
+<a href="#overview">Overview for busy people</a>
+<a href="#screencast">Screencast</a>
+</li>
+<li><h3><a href="/pages/features">Features</a>
+</h3>
+<a href="/pages/features#overview">Overview</a>
+<a href="/pages/features#comparsion">Comparsion to others</a>
+</li>
+<li><h3><a href="/pages/getting-started">Get started</a>
+</h3>
+<a href="/pages/getting-started#install">Download &amp; install</a>
+<a href="/pages/getting-started#walkthroughs">Walkthroughs</a>
+</li>
+<li><h3><a href="/pages/documentation">Documentation</a>
+</h3>
+<a href="/pages/frequently-asked-questions">FAQ</a>
+<a href="/pages/documentation#api">API</a>
+<a href="/pages/documentation#howtos">Howtos</a>
+<a href="/pages/documentation#overviews">Overviews</a>
+<a href="/pages/documentation#recipes">Recipes</a>
+</li>
+<li><h3><a href="/pages/community">Community</a>
+</h3>
+<a href="/pages/community#mailinglist">Mailinglist</a>
+<a href="/pages/community#issues">Issue tracker</a>
+<a href="/pages/community#team">Team &amp; Acknowledgements</a>
+</li>
+</ul>
+</div>
+<div id="content"><h1>
+<a href="/pages/getting-started" class="show wikipage" id="show_wikipage_30" title="Show">Getting started</a>
+</h1>
+<h2>Get Globalize!</h2>
+<p>Generally we recommend using the Rails plugin install script via Subversion:</p>
+<ul>
+<li>
+script/plugin install
+<a href="http://svn.globalize-rails.org/svn/globalize/branches/for-1.2">http://svn.globalize-rails.org/svn/globalize/branches/for-1.2</a>
+(this is for Rails 1.2)
+</li>
+<li>
+script/plugin install
+<a href="http://svn.globalize-rails.org/svn/globalize/branches/for-1.1">http://svn.globalize-rails.org/svn/globalize/branches/for-1.1</a>
+(this is for Rails 1.1)
+</li>
+<li>
+script/plugin install
+<a href="http://svn.globalize-rails.org/svn/globalize/trunk">http://svn.globalize-rails.org/svn/globalize/trunk</a>
+(this is edge Globalize)
+</li>
+</ul>
+<p>If you have problems with Subversions, e.g. because you’re behind a restrictive firewall, you might want to use the tar files:</p>
+<ul>
+<li>
+<a href="http://globalize.artweb-design.de/20070316/globalize_for-1_2.tar.gz">http://globalize.artweb-design.de/20070316/globalize_for-1_2.tar.gz</a>
+</li>
+<li>
+<a href="http://globalize.artweb-design.de/20070316/globalize_for-1_1.tar.gz">http://globalize.artweb-design.de/20070316/globalize_for-1_1.tar.gz</a>
+</li>
+<li>
+<a href="http://globalize.artweb-design.de/20070316/globalize_trunk.tar.gz">http://globalize.artweb-design.de/20070316/globalize_trunk.tar.gz</a>
+</li>
+</ul>
+<h2>How to install</h2>
+<p>From your rails app root directory:</p>
+<ol>
+<li>
+script/plugin install
+<a href="svn://svn.globalize-rails.org/globalize/branches/for-1.1">svn://svn.globalize-rails.org/globalize/branches/for-1.1</a>
+</li>
+<li>rake globalize:setup</li>
+</ol>
+<p>...and you’re globalized, dude!</p>
+Also, you might want to:
+<ul>
+<li>Get edge Globalize instead of stable: svn://svn.globalize-rails.org/globalize/trunk</li>
+<li>
+Add
+<code>include Globalize</code>
+to your
+<code>environment.rb</code>
+file, so that you won’t have to type
+<code>Globalize::Locale.set</code>
+all the time. Instead, you can just type
+<code>Locale.set</code>
+.
+</li>
+<li>
+Add Language and Country fixtures if your code references any models provided Globalize. Look in
+<code>vendor/plugins/globalize/test/fixtures</code>
+for a template.
+</li>
+</ul>
+<p>Optionally, try:</p>
+<ul>
+<li>
+<code>rake globalize:test</code>
+<br>
+globalize plugin testing has it’s own database.yml file, so make sure to configure it before running the tests. it’s found in the directory
+<code>RAILS_ROOT/vendor/plugins/globalize/test/config</code>
+</li>
+<li>
+<code>rake doc:plugins</code>
+<br>
+This creates
+<code>HTML</code>
+documentation in the
+<code>RAILS_ROOT/doc/plugins/globalize</code>
+directory.
+</li>
+</ul>
+<h2>Get started</h2>
+<p>There are several walkthrough- or howto-style articles available, each taking a different approach. We don’t garantuee for the freshness of the presented information though.</p>
+<ul>
+<li>
+<a href="http://www.artweb-design.de/articles/2006/11/10/get-on-rails-with-globalize-comprehensive-writeup">Sven’s Globalize Writeup</a>
+– has sometimes been refered to as “the best documentation available for Globalize”
+</li>
+<li>
+<a href="/pages/example-application">Example Application</a>
+– takes you step by step through the process of creating a Globalized example application
+</li>
+<li>
+<a href="/pages/unit-tested-example">Unit-tested Example</a>
+– a walkthrough using a test-driven approach by Josh Harvey
+</li>
+</ul>
+<p>Also relevant:</p>
+<ul>
+<li>
+<a href="http://www.saimonmoore.net/2007/3/17/globalize-internal-storage-mechanism">The Internal Storage Mechanism For Globalize for Rails Model Translations</a>
+– Saimon’s comprehensive intro and overview to Globalize’s alternative model translations storage mechanism
+</li>
+</ul>
+<p>
+Find more howtos, tutorials and articles in the
+<a href="/pages/documentation">documentation section</a>
+</p>
+<p>
+Also, be sure to subscribe to our
+<a href="/pages/community#mailinglist">mailing list</a>
+and check out our
+<a href="/pages/documentation">documentation</a>
+</p>
+
+
+</div>
+</div>
+</body>
+</html>

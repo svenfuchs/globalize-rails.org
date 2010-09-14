@@ -7,62 +7,65 @@ class Layouts::Default < Minimal::Template
         div :id => 'page' do
           div :id => 'header' do
             h1 do
-              a 'Globalize<span>for Ruby on Rails</span>', :href => '/'
+              a 'Globalize<span>for Ruby on Rails</span>'.html_safe, :href => '/'
             end
                 
-            ul :id => 'menu' do
-              li :class => "first" do
-                a 'All Pages', :href => "/wikipages"
-              end
-              #<!--li><a href="/recent_activity">Recent</a></li-->
-              #<!--li><a href="/authors">Authors</a></li-->
-              #<!--li><a href="/home.atom">Atom Feed</a></li-->
-              li do
-                a 'Admin', :href => "/admin"
-              end
-              li do
-                a 'Login', :href => "/login"
-              end
-            end
+            # ul :id => 'menu' do
+            #   #<!--li><a href="/recent_activity">Recent</a></li-->
+            #   #<!--li><a href="/authors">Authors</a></li-->
+            #   #<!--li><a href="/home.atom">Atom Feed</a></li-->
+            # end
 
             h2 "Webapplication Internationalization that doesn't hurt"
             #<!--p>Globalize is a Ruby on Rails plugin designed to support multilingual applications. It’s under the MIT License, same as Ruby on Rails.</p-->
             ul :id => 'main-nav' do
-              li '<h3><a href="/">What is Globalize?</a></h3>' do
+              li do
+                h3 do
+                  a 'What is Globalize?', :href => '/'
+                end
                 a 'News', :href => "#news"
                 a 'Overview for busy people', :href => "#overview"
                 a 'Screencast', :href => "#screencast"
               end
-              li '<h3><a href="/wikipages/features">Features</a></h3>' do
-                a 'Overview', :href => "/wikipages/features#overview"
-                a 'Comparsion to others', :href => "/wikipages/features#comparsion"
+              li do
+                h3 do
+                  a 'Features', :href => "/pages/features"
+                end
+                a 'Overview', :href => "/pages/features#overview"
+                a 'Comparsion to others', :href => "/pages/features#comparsion"
               end
-              li '<h3><a href="/wikipages/getting-started">Get started</a></h3>' do
-                a 'Download & install', :href => "/wikipages/getting-started#install"
-                a 'Walkthroughs', :href => "/wikipages/getting-started#walkthroughs"
+              li do 
+                h3 do
+                  a 'Get started', :href => "/pages/getting-started"
+                end
+                a 'Download & install', :href => "/pages/getting-started#install"
+                a 'Walkthroughs', :href => "/pages/getting-started#walkthroughs"
               end
-              li '<h3><a href="/wikipages/documentation">Documentation</a></h3>' do
-                a 'FAQ', :href => "/wikipages/frequently-asked-questions"
-                a 'API', :href => "/wikipages/documentation#api"
-                a 'Howtos', :href => "/wikipages/documentation#howtos"
-                a 'Overviews', :href => "/wikipages/documentation#overviews"
-                a 'Recipes', :href => "/wikipages/documentation#recipes"
+              li do 
+                h3 do
+                  a 'Documentation', :href => "/pages/documentation"
+                end
+                a 'FAQ', :href => "/pages/frequently-asked-questions"
+                a 'API', :href => "/pages/documentation#api"
+                a 'Howtos', :href => "/pages/documentation#howtos"
+                a 'Overviews', :href => "/pages/documentation#overviews"
+                a 'Recipes', :href => "/pages/documentation#recipes"
               end
-              li '<h3><a href="/wikipages/community">Community</a></h3>' do
-                a 'Mailinglist', :href => "/wikipages/community#mailinglist"
-                a 'Issue tracker', :href => "/wikipages/community#issues"
-                a 'Team &amp; Acknowledgements', :href => "/wikipages/community#team"
+              li do
+                h3 do
+                  a 'Community', :href => "/pages/community"
+                end
+                a 'Mailinglist', :href => "/pages/community#mailinglist"
+                a 'Issue tracker', :href => "/pages/community#issues"
+                a 'Team & Acknowledgements', :href => "/pages/community#team"
               end
             end
-            # h2 current_site.subtitle
-            login_links
-            section_links
+            # h2 site.subtitle
             # self << Menus::Sections.new.build(self).root.render(:id => 'sections')
             # yield :header
           end
         #  div :id => 'page' do
           div :id => 'content' do
-#= render :partial => 'shared/flash'
             yield
           end
             # yield(:footer) || render(:partial => 'shared/footer')
@@ -89,7 +92,7 @@ class Layouts::Default < Minimal::Template
   end
 
   def title
-    super(current_site.title)
+    super(site.title)
   end
 
   def stylesheets
@@ -102,25 +105,6 @@ class Layouts::Default < Minimal::Template
   
   def body_class
     resource.class.name.singularize.underscore if resource
-  end
-  
-  def login_links
-    p :id => 'login_links', :class => 'navigation' do
-      link_to :'.sign_in', new_user_session_path(:return_to => request.fullpath), :id => 'login_link'
-      link_to :'.sign_up', new_user_registration_path, :id => 'signup_link'
-    end
-    p :id => 'logout_links', :class => 'navigation', :style => 'display: none;' do
-      self << t(:'.logged_in_as', :user => '<span class="user_name"></span>')
-      link_to :'.sign_out', destroy_user_session_path(:return_to => request.fullpath), :id => 'logout_link'
-    end
-  end
-  
-  def section_links
-    ul :id => 'sections' do
-      current_site.sections.each do |section|
-        li link_to(section.title, section)
-      end
-    end
   end
   
   def content

@@ -59,7 +59,7 @@
     
     <li>remove created_on and updated_on input elements from <code>app/views/admin/products/_form.rhtml</code> partial &#8211; you don&#8217;t need them as they these fields are updated automatically</li>
     
-    <li>copy index, list and show actions from <codee>app/controllers/admin/products_controller.rb</code> to <code>app/controllers/product_controller.rb</code></li>
+    <li>copy index, list and show actions from <code>app/controllers/admin/products_controller.rb</code> to <code>app/controllers/product_controller.rb</code></li>
     
     <li>copy <code>list.rhtml</code> and <code>show.rhtml</code> files from <code>app/views/admin/products/</code> to <code>app/views/product/</code></li>
     
