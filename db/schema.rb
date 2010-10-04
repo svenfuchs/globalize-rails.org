@@ -131,10 +131,10 @@ ActiveRecord::Schema.define(:version => 20100820090221) do
     t.integer  "lft"
     t.integer  "rgt"
     t.string   "type"
-    t.string   "title",      :default => "", :null => false
+    t.string   "name",       :default => "", :null => false
     t.string   "slug",       :default => "", :null => false
     t.string   "path",       :default => "", :null => false
-    t.string   "level"
+    t.integer  "level"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -144,7 +144,7 @@ ActiveRecord::Schema.define(:version => 20100820090221) do
     t.string   "name",       :default => "", :null => false
     t.string   "host",       :default => "", :null => false
     t.string   "title",      :default => "", :null => false
-    t.string   "subtitle"
+    t.string   "subtitle",   :default => ""
     t.string   "timezone"
     t.datetime "created_at"
     t.datetime "updated_at"

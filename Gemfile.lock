@@ -11,13 +11,14 @@ PATH
     adva-core (0.0.1)
       gem_patching
       inherited_resources (= 1.1.2)
-      inherited_resources_helpers (= 0.0.6)
-      minimal (= 0.0.18)
+      inherited_resources_helpers (= 0.0.9)
+      minimal (= 0.0.20)
       nbrew-country_select
       rails (= 3.0.0)
-      routing-filter (= 0.1.6)
+      routing-filter (= 0.1.7)
+      silence_log_tailer
       simple_form
-      simple_nested_set (= 0.0.11)
+      simple_nested_set (= 0.0.13)
       simple_slugs (= 0.0.7)
       simple_table (= 0.0.5)
 
@@ -98,7 +99,7 @@ GEM
     inherited_resources (1.1.2)
       has_scope (~> 0.5.0)
       responders (~> 0.6.0)
-    inherited_resources_helpers (0.0.6)
+    inherited_resources_helpers (0.0.9)
     json_pure (1.4.6)
     linecache (0.43)
     mail (2.2.6.1)
@@ -106,7 +107,7 @@ GEM
       mime-types
       treetop (>= 1.4.5)
     mime-types (1.16)
-    minimal (0.0.18)
+    minimal (0.0.20)
       actionpack (>= 3.0.0.beta2)
     mocha (0.9.8)
       rake
@@ -135,17 +136,19 @@ GEM
       thor (~> 0.14.0)
     rake (0.8.7)
     responders (0.6.2)
-    routing-filter (0.1.6)
+    routing-filter (0.1.7)
       actionpack
     ruby-debug (0.10.3)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.3.0)
     ruby-debug-base (0.10.3)
       linecache (>= 0.3)
+    silence_log_tailer (0.0.1)
     simple_form (1.2.2)
-    simple_nested_set (0.0.11)
-      activerecord (>= 3.0.0.beta4)
+    simple_nested_set (0.0.13)
+      activerecord (~> 3.0.0)
       activesupport
+      gem_patching
     simple_slugs (0.0.7)
     simple_table (0.0.5)
       actionpack (~> 3.0.0.rc)
